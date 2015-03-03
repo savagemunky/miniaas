@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ControlServer',
-    'django.contrib.admin',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,10 +59,27 @@ WSGI_APPLICATION = 'miniaas.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'miniaas',
+        'USER': 'miniaas',
+        'PASSWORD': 'miniaas',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
+
+
+# Templates directory
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    TEMPLATE_PATH,
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
