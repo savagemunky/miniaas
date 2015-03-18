@@ -1,13 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %}Create an account{% endblock %}
+    {% block windowtitle %}Mini IaaS - Registration{% endblock %}
 
-{% block content %}
-  <h1>Create an account</h1>
+    {% block pagetitle %}<h2>Create an Account</h2>{% endblock %}
 
-  <form action="" method="post">
-      {{ form.as_p }}
-      <input type="submit" value="Create">
-  </form>
-{% endblock %}
-{% block footer %}{% endblock %}
+    {% block content %}
+        <form action="login.html" method="post">
+            <label for="uname">Enter a username</label>
+            <br/>
+            <input type="text" name="username" value="" id="uname"/>
+            <br/>
+            <br/>
+            <label for="pword">Enter a password: </label>
+            <br/>
+            <input type="password" name="password" value="" id="pword"/>
+            <br/>
+            <br/>
+            <label for="pword2">Re-enter your password for verification</label>
+            <br/>
+            <input type="password" name="password2" value="" id="pword2"/>
+            <br/>
+            <br/>
+            <input type="submit" value="Create"/>
+        </form>
+    {% endblock %}

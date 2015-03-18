@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+        {% block windowtitle %}Mini Iaas - Login{% endblock %}
+
+        {% block pagetitle %}<h2>Login</h2>{% endblock %}
+
+        {% block content %}
+        <div class="row">
+            <div class="col-md-12">
+                {% if form.errors %}
+                    <p class="alert-warning">Incorrect username or password.</p>
+                {% endif %}
+
+                <form action="login.html" method="post">
+                    <label for="uname">Username: </label>
+                    <input type="text" name="username" value="" id="uname"/>
+                    <br/>
+                    <label for="pword">Password: </label>
+                    <input type="password" name="password" value="" id="pword"/>
+                    <br/>
+                    <input type="submit" value="Login"/>
+                </form>
+            </div>
+        </div>
+        {% endblock %}

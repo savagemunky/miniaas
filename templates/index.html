@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+        {% block windowtitle %}Mini Iaas{% endblock %}
+
+        {% block pagetitle %}<h2>Welcome to Mini Infrastructure as a Service</h2>{% endblock %}
+
+        {% block content %}
+        <div class="row">
+            <div class="col-md-6">
+                <h2>About Mini IaaS</h2>
+                <p>
+                    Mini Infrastructure as a Service (Mini IaaS) is a Infrastructure as a Service project that is
+                    designed to run on low-cost and low-power hardware such as Raspberry Pi's. The idea is not to
+                    replace traditional infrastructure, but rather to support and assist it. This is achieved by
+                    taking smaller services such as DHCP, DNS, NTP, and domain controller off of primary IaaS
+                    solutions and putting them on Mini IaaS.
+                </p>
+
+                <p>
+                    Other possible use for Mini IaaS include:
+                </p>
+                <ul>
+                    <li>As a development environment for applications designed for portable or embedded devices</li>
+                    <li>As a test environment for applications designed portable or embedded devices</li>
+                    <li>As hosting for lightweight web servers</li>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <h2>Login</h2>
+
+
+                <br/>
+                <p>Don't have an account? <a href="/register/">Create an account</a>.</p>
+            </div>
+        </div>
+        {% endblock %}

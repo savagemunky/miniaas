@@ -1,15 +1,51 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!doctype html>
 <html>
-<head>
-    <title>
-        {% block title %}{% endblock %}
-    </title>
-</head>
-<body>
-    {% block content %}{% endblock %}
-    {% block footer %}
-    <hr>
-    <p>2015 Mini IaaS</p>
-    {% endblock %}
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap.css">
+        <title>
+            {% block windowtitle %}Mini IaaS{% endblock %}
+        </title>
+    </head>
+    <body style="padding-top: 50px; background-color: #1E52A8">
+        {% block navbar %}
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class ="navbar-brand" href="#">Mini IaaS</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        </div>
+        {% endblock %}
+
+        <div class="container" style="background-color: #FFFFFF">
+        {% block pagetitle %}
+
+        {% endblock %}
+
+        {% block content %}
+
+        {% endblock %}
+        </div>
+
+        <div class="container" style="background-color: #FFFFFF">
+        {% block footer %}
+            <hr>
+            Last Updated: 2015-03-17
+            <br/>
+            Created using Bash, Python, Django, Bootstrap and PyCharm.
+            <br/>
+            Powered by Apache running on a Raspberry Pi 2.
+            <br/>
+
+        {% endblock %}
+        </div>
+    </body>
 </html>
