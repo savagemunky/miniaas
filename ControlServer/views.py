@@ -1,15 +1,21 @@
+import os
+import subprocess
+from django.contrib.auth.models import User
+from ControlServer.models import Hosts
+from ControlServer.models import Host_Stats
+from ControlServer.models import Containers
 from django.contrib import auth
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import login
-from django.http import HttpResponse
+# from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.views import login
+# from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.shortcuts import render_to_response
-from models import LoginForm
+# from models import LoginForm
 
 
 # Create your views here.
-
+'''
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -21,8 +27,9 @@ def register_view(request):
     return render(request, "/register/", {
         'form': form,
     })
+'''
 
-
+# This function defines what information is shown the index / login page
 def index_view(request):
     if request.method == 'POST':
         username = request.POST.get('username', '')
@@ -30,15 +37,46 @@ def index_view(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
+            HttpResponseRedirect(request, "containers.html")
         else:
             return render(request, '')
     else:
         return render(request, 'index.html')
 
-
+# This function defines what information is displayed in the main view
+# This function is currently not in use
 def main_view(request):
     if request.method == 'POST':
         return render_to_response('main.html')
     else:
         return render(request, 'main.html')
 
+# This function defines what information is displayed on the containers page
+def containers_view(request):
+    con_name = "rho"
+    con_ip = "0.0.0.0"  # This will be set later - the containers use DHCP
+    con_host_ip = "172.16.0.1"
+
+    # If the user is authenticated
+    if request.user.is_authenticated():
+        # Create container
+        subprocess.Popen("(sleep 1; echo -e \"pi\r\"; sleep 1; echo -e \"pi\r\"; sleep 2; echo -e \"sudo lxc-create -n rho -t pi -P /var/lxc/guests\"; sleep 400; echo -e \"exit\r\") | telnet 172.16.0.1")
+    # Otherwise return the user to the index screen
+    else:
+        return render(request, 'index.html')
+
+# This function defines what information is shown on the stats page
+def stats_view(request):
+    if request.user.is_authenticated():
+        return render(request,
+                      Host_Stats.log_time,
+                      Host_Stats.ip_address,
+                      Host_Stats.cpu_use,
+                      Host_Stats.mem_total,
+                      Host_Stats.mem_used,
+                      Host_Stats.mem_free,
+                      Host_Stats.store_total,
+                      Host_Stats.store_used,
+                      Host_Stats.store_free)
+    else:
+        return render(request, 'index.html')

@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     url(r'^register/$', 'ControlServer.views.register_view'),
     url(r'^main/$', 'ControlServer.views.main_view'),
     url(r'^invalid/$', 'ControlServer.views.invalid_credentials_view'),
+    url(r'^containers/$', 'ControlServer.views.containers'),
     # url(r'^$',),
 )
