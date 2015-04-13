@@ -28,7 +28,7 @@ class Hosts(models.Model):
 class Host_Stats(models.Model):
     id = models.AutoField(primary_key=True)
     log_time = models.DateTimeField(auto_now_add=True)
-    ip_address = models.ForeignKey(max_length=15)
+    ip_address = models.ForeignKey('Hosts')
     cpu_use = models.IntegerField(max_length=3,)
     mem_total = models.IntegerField(max_length=6)
     mem_used = models.IntegerField(max_length=6)
@@ -42,7 +42,7 @@ class Host_Stats(models.Model):
 # This class is used to create the Database table for Container information
 class Containers (models.Model):
     id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey('User')
+    user_id = models.ForeignKey(User)
     host_ip = models.ForeignKey('Hosts')
     container_ip = models.CharField(max_length=15)
     container_mac = models.CharField(max_length=17)

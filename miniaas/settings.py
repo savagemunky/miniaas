@@ -79,6 +79,9 @@ TEMPLATE_DIRS = (
     TEMPLATE_PATH,
 )
 
+# Static files directory
+STATIC_PATH = os.path.join(BASE_DIR, 'ControlServer/static')
+STATICFILES_DIRS = (STATIC_PATH,)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
