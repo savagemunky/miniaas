@@ -20,7 +20,7 @@ class Hosts(models.Model):
     mac_address = models.CharField(max_length=17)
     host_name = models.CharField(max_length=50)
     online = models.BooleanField(default=False)
-    reserved = models.BooleanField(default=False)
+    reserved = models.BooleanField(default=False, null=True)
 
 
 # Host_Stats Class
