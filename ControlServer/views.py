@@ -43,6 +43,19 @@ def index_view(request):
     else:
         return render(request, 'index.html')
 
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            HttpResponseRedirect(request, "container.html")
+        else:
+            return render(request, '')
+    else:
+        return render(request, 'login.html')
+
 # This function defines what information is displayed in the main view
 # This function is currently not in use
 def main_view(request):
