@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="http://localhost/static/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap.css">
         <title>
             {% block windowtitle %}Mini IaaS{% endblock %}
         </title>
@@ -17,7 +17,10 @@
                 </div>
                 <div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
+                        <li class="active"><a href="/main/">Home</a></li>
+                        <li class="active"><a href="/admin/">Login</a></li>
+                        <li class="active"><a href="/containers/">Containers</a></li>
+                        <li class="active"><a href="/stats/">Statistics</a></li>
                     </ul>
                 </div>
             </div>
@@ -38,13 +41,9 @@
         <div class="container" style="background-color: #FFFFFF">
         {% block footer %}
             <hr>
-            Last Updated: 2015-03-17
-            <br/>
-            Created using Bash, Python, Django, Bootstrap and PyCharm.
-            <br/>
-            Powered by Apache running on a Raspberry Pi 2.
-            <br/>
-
+            <p>Last Updated: 2015-04-14</p>
+            <p>Created using Bash, Python, Django, Bootstrap and PyCharm.</p>
+            <p>Powered by Apache running on a Raspberry Pi 2.</p>
         {% endblock %}
         </div>
     </body>

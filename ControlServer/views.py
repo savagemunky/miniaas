@@ -67,16 +67,8 @@ def containers_view(request):
 
 # This function defines what information is shown on the stats page
 def stats_view(request):
-    if request.user.is_authenticated():
-        return render(request,
-                      Host_Stats.log_time,
-                      Host_Stats.ip_address,
-                      Host_Stats.cpu_use,
-                      Host_Stats.mem_total,
-                      Host_Stats.mem_used,
-                      Host_Stats.mem_free,
-                      Host_Stats.store_total,
-                      Host_Stats.store_used,
-                      Host_Stats.store_free)
-    else:
-        return render(request, 'index.html')
+    # if request.user.is_authenticated():
+        recentStats = Host_Stats.objects.order_by()
+        return render_to_response()
+    # else:
+        #return render(request, 'index.html')
