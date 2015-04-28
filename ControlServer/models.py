@@ -52,9 +52,17 @@ class Containers (models.Model):
     container_ram_limit = models.IntegerField(max_length=6)
 
 
+# Table class for Containers
+# This class is used to create a table from the Containers model
+class Containers_Table(tables.Table):
+    class Meta:
+        model = Containers
+
+
 # Table class for Host Stats
-# This class is used to create tables from the Host_Stats data
+# This class is used to create tables from the Host_Stats model
 class Stats_Table(tables.Table):
     class Meta:
         model = Host_Stats
-
+        fields = ("log_time", "ip_address", "cpu_use", "mem_used", "mem_free", "store_total", "store_free")
+        attrs = {"class": "table table-striped"}

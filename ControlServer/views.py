@@ -1,17 +1,15 @@
+# Python Imports
 import os
 import subprocess
+
+# Django Imports
 from django.contrib.auth.models import User
-from ControlServer.models import Hosts
-from ControlServer.models import Host_Stats
-from ControlServer.models import Stats_Table
-from ControlServer.models import Containers
+from ControlServer.models import Hosts, Host_Stats, Containers, Stats_Table, Containers_Table
 from django.contrib import auth
 # from django.contrib.auth.forms import UserCreationForm
 # from django.contrib.auth.views import login
-# from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.shortcuts import render_to_response
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, render_to_response
 # from models import LoginForm
 from django_tables2 import RequestConfig
 
@@ -72,34 +70,42 @@ def main_view(request):
 
 # This function defines what information is displayed on the containers page
 def containers_view(request):
+
+    # List containers
+    contable = Containers_Table(Host_Stats.objects.all())
+    RequestConfig(request).configure(hstable)
+    return render(request, 'stats.html', {'statsTable': hstable})
+
     con_name = "rho"
     con_host_name = "pistack1.local"
+    con_ip_address = "172.16.0.101"
 
-    # If the user is authenticated
-    if request.user.is_authenticated():
-        # Create container
-        tnet_login = "(sleep 1; echo -e \"pi\r\"; sleep 1; echo -e \"pi\r\"; sleep 2;"
-        lxc_create = " echo -e \"sudo lxc-create -n %s -t pi -P /var/lxc/guests\"; sleep 400;" % con_name
-        tnet_exit = " echo -e \"exit\r\") | telnet %s" % con_host_name
-        con_create_string = "(" + tnet_login + lxc_create + tnet_exit + ")"
-        # subprocess.Popen(con_create_string, stdout=subprocess.PIPE)
-        return render_to_response(con_create_string)
-    # Otherwise return the user to the index screen
-    else:
-        return render(request, 'index.html')
+    # Create container
+    tnet_login = "(sleep 1; echo -e \"pi\r\"; sleep 1; echo -e \"pi\r\"; sleep 2;"
+    lxc_create = " echo -e \"sudo lxc-create -n %s -t pi -P /var/lxc/guests\"; sleep 400;" % con_name
+    tnet_exit = " echo -e \"exit\r\") | telnet %s" % con_host_name
+    con_create_string = "(" + tnet_login + lxc_create + tnet_exit + ")"
+    # subprocess.Popen(con_create_string, stdout=subprocess.PIPE)
 
 
-#def stats_table(request):
-#    hstable = Stats_Table(Host_Stats.objects.all())
-#    RequestConfig(request).configure(hstable)
-#    return render(request, 'stats.html', {'statsTable': hstable})
+    # Destroy Container
+    lxc_destroy = " echo -e \"sudo lxc-destroy -n %s -f -P /var/lxc/guests\"; sleep 300;" % con_name
+    con_destroy_string = "(" + tnet_login + lxc_destroy + tnet_exit + ")"
 
+    # Start Container
+
+
+    # Stop Container
+
+
+    return render_to_response(con_create_string)
 
 # This function defines what information is shown on the stats page
 def stats_view(request):
     hstable = Stats_Table(Host_Stats.objects.all())
     RequestConfig(request).configure(hstable)
     return render(request, 'stats.html', {'statsTable': hstable})
+
     #stats_table(request)
     # if request.user.is_authenticated():
         #recentStats = Host_Stats.objects.order_by()
