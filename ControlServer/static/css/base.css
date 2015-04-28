@@ -1,0 +1,43 @@
+.site-navigation {
+
+}
+.site-navigation ul {
+    display: inline-block;
+}
+
+.site-navigation li {
+    text-align: center;
+}
+
+.page-container {
+    width: 700px;
+    background-color: #1E52A8;
+}
+
+.page-title {
+    width: 680px;
+    background-color: #FFEEDD;
+    margin-left: 10px;
+}
+
+.page-content {
+    width: 680px;
+    background-color: #FFEEDD;
+    margin-left: 10px;
+}
+
+.page-footer {
+    background-color: #FFEEDD;
+    margin-left: 10px;
+}
+
+.index-info {
+    width: 320px;
+    float: left;
+}
+
+.index-login {
+    width: 320px;
+    float: left;
+
+}
