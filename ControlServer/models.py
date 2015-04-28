@@ -1,6 +1,7 @@
 # Import classes
 from django.db import models
 from django.contrib.auth.models import User
+import django_tables2 as tables
 
 # The models.py is where all classes that deal with or handle
 # data live. This primarily means databases tables and attributes
@@ -49,3 +50,11 @@ class Containers (models.Model):
     container_name = models.CharField(max_length=50)
     container_cpu_limit = models.IntegerField(max_length=3)
     container_ram_limit = models.IntegerField(max_length=6)
+
+
+# Table class for Host Stats
+# This class is used to create tables from the Host_Stats data
+class Stats_Table(tables.Table):
+    class Meta:
+        model = Host_Stats
+
