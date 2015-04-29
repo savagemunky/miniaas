@@ -6,27 +6,32 @@
         {% block pagetitle %}<h2>Containers</h2>{% endblock %}
 
         {% block content %}
-            <p>Available Containers:</p>
+            <p><h3>Available Containers</h3></p>
             {% render_table conTable %}
 
-            <p>Create a container</p>
+            <hr>
 
-            <br/>
-            <br/>
+            <p><h3>Create a container</h3></p>
+            <p>Note: Creating a container typically takes between 5 and 10 minutes.</p>
+            <p>However, it can take up to 20 minutes if the file cache is empty.</p>
 
-            <p>Start a container</p>
+            <form action="/containers/" method="post">
+                <table>
+                    {{ cform.as_table }}
+                </table>
+                <input type="submit" value="Create" />
+            </form>
 
-            <br/>
-            <br/>
+            <hr>
 
-            <p>Stop a container</p>
+            <p><h3>Start a Container</h3></p>
 
-            <br/>
-            <br/>
+            <hr>
 
-            <p>Delete a container</p>
+            <p><h3>Stop a Container</h3></p>
 
-            <br/>
-            <br/>
+            <hr>
+
+            <p><h3>Delete a Container</h3></p>
 
         {% endblock %}

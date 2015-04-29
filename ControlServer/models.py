@@ -1,6 +1,7 @@
 # Import classes
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 import django_tables2 as tables
 
 # The models.py is where all classes that deal with or handle
@@ -23,6 +24,9 @@ class Hosts(models.Model):
     online = models.BooleanField(default=False)
     reserved = models.NullBooleanField(default=False, null=True)
 
+    def __str__(self):
+        return self.ip_address
+
 
 # Host_Stats Class
 # This class is used to create the Database table for Host Statistics
@@ -41,7 +45,7 @@ class Host_Stats(models.Model):
 
 # Container Class
 # This class is used to create the Database table for Container information
-class Containers (models.Model):
+class Containers(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User)
     host_ip = models.ForeignKey('Hosts')
@@ -75,6 +79,30 @@ class Stats_Table(tables.Table):
     class Meta:
         model = Host_Stats
         attrs = {"class": "table table-striped"}
-        fields = ("log_time", "cpu_use", "mem_used", "mem_free", "store_total", "store_free")
-        sequence = ("log_time", "host_name", "ip_address", "cpu_use", "mem_used", "mem_free", "store_total", "store_free")
+        fields = ("log_time",
+                  "cpu_use",
+                  "mem_used",
+                  "mem_free",
+                  "store_used",
+                  "store_free")
+        sequence = ("log_time",
+                    "host_name",
+                    "ip_address",
+                    "cpu_use",
+                    "mem_used",
+                    "mem_free",
+                    "store_used",
+                    "store_free")
 
+
+class CreateConForm(ModelForm):
+
+    class Meta:
+        model = Containers
+        fields = ['user_id',
+                  'host_ip',
+                  'container_ip',
+                  'container_mac',
+                  'container_name',
+                  'container_cpu_limit',
+                  'container_ram_limit']

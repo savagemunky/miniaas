@@ -4,7 +4,7 @@ import subprocess
 
 # Django Imports
 from django.contrib.auth.models import User
-from ControlServer.models import Hosts, Host_Stats, Containers, Stats_Table, Containers_Table
+from ControlServer.models import Hosts, Host_Stats, Containers, Stats_Table, Containers_Table, CreateConForm
 from django.contrib import auth
 # from django.contrib.auth.forms import UserCreationForm
 # from django.contrib.auth.views import login
@@ -74,34 +74,54 @@ def containers_view(request):
     # List containers
     contable = Containers_Table(Containers.objects.all())
     RequestConfig(request).configure(contable)
-    #return render(request, 'containers.html', {'conTable': contable})
 
-    con_name = "rho"
-    con_host_name = "pistack1.local"
-    con_ip_address = "172.16.0.101"
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        conForm = CreateConForm(request.POST)
+        # check whether it's valid:
+        if conForm.is_valid():
+            # process the data in form.cleaned_data as required
+            host_ip = conForm.cleaned_data['host_ip']
+            con_name = conForm.cleaned_data['container_name']
+            con_ip_address = conForm.cleaned_data['container_ip']
+            con_mac_address = conForm.cleaned_data['container_mac']
 
-    tnet_login = "(sleep 1; echo -e \"pi\r\"; sleep 1; echo -e \"pi\r\"; sleep 2;"
-    tnet_exit = " echo -e \"exit\r\") | telnet %s" % con_host_name
+            tnet_login = "(sleep 1; echo -e \"pi\r\"; sleep 1; echo -e \"pi\r\"; sleep 2;"
+            tnet_exit = " echo -e \"exit\r\") | telnet %s" % host_ip
 
-    # Create container
-    lxc_create = " echo -e \"sudo lxc-create -n %s -t pi -P /var/lxc/guests\"; sleep 400;" % con_name
-    con_create_string = "(" + tnet_login + lxc_create + tnet_exit + ")"
-    # subprocess.Popen(con_create_string, stdout=subprocess.PIPE)
+            # Create container
+            lxc_create = " echo -e \"sudo lxc-create -n %s -t pi -f /var/lxc/guests/%s.config -P /var/lxc/guests\"; sleep 400" % (con_name, con_name)
+            con_create_string = tnet_login + lxc_create + tnet_exit
+            # subprocess.Popen(con_create_string, stdout=subprocess.PIPE)
+            print con_create_string
+            conForm.save()
+
+            # Redirect to a new URL:
+            return HttpResponseRedirect('/containers/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        conForm = CreateConForm()
+        #return render(request, 'containers.html', {'cform': conForm})
+
+
+
+
 
     # Destroy Container
-    lxc_destroy = " echo -e \"sudo lxc-destroy -n %s -f -P /var/lxc/guests\"; sleep 300;" % con_name
-    con_destroy_string = "(" + tnet_login + lxc_destroy + tnet_exit + ")"
+    #lxc_destroy = " echo -e \"sudo lxc-destroy -n %s -f -P /var/lxc/guests\"; sleep 300;" % con_name
+    #con_destroy_string = "(" + tnet_login + lxc_destroy + tnet_exit + ")"
 
     # Start Container
-    lxc_start = " echo -e \"sudo lxc-start -n %s -P /var/lxc/guests\"; sleep 300;" % con_name
-    con_start_string = "(" + tnet_login + lxc_start + tnet_exit + ")"
-
+    #lxc_start = " echo -e \"sudo lxc-start -n %s -P /var/lxc/guests\"; sleep 300;" % con_name
+    #con_start_string = "(" + tnet_login + lxc_start + tnet_exit + ")"
 
     # Stop Container
-    lxc_stop = " echo -e \"sudo lxc-stop -n %s -P /var/lxc/guests\"; sleep 300;" % con_name
-    con_stop_string = "(" + tnet_login + lxc_stop + tnet_exit + ")"
+    #lxc_stop = " echo -e \"sudo lxc-stop -n %s -P /var/lxc/guests\"; sleep 300;" % con_name
+    #con_stop_string = "(" + tnet_login + lxc_stop + tnet_exit + ")"
 
-    return render(request, 'containers.html', {'conTable': contable})
+    return render(request, 'containers.html', {'conTable': contable, 'cform': conForm})
 
 
 # This function defines what information is shown on the stats page
