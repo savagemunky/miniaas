@@ -55,14 +55,26 @@ class Containers (models.Model):
 # Table class for Containers
 # This class is used to create a table from the Containers model
 class Containers_Table(tables.Table):
+    host_ip_address = tables.Column(accessor='host_ip.ip_address')
+    host_name = tables.Column(accessor='host_ip.host_name')
+
     class Meta:
         model = Containers
+        attrs = {"class": "table table-striped"}
+        fields = ("container_name", "container_ip")
+        sequence = ("host_name", "host_ip_address", "container_name", "container_ip")
 
 
 # Table class for Host Stats
 # This class is used to create tables from the Host_Stats model
 class Stats_Table(tables.Table):
+    ip_address = tables.Column(accessor='ip_address.ip_address')
+    host_name = tables.Column(accessor='ip_address.host_name')
+    log_time = tables.DateTimeColumn(format='Y/m/d H:i:s')
+
     class Meta:
         model = Host_Stats
-        fields = ("log_time", "ip_address", "cpu_use", "mem_used", "mem_free", "store_total", "store_free")
         attrs = {"class": "table table-striped"}
+        fields = ("log_time", "cpu_use", "mem_used", "mem_free", "store_total", "store_free")
+        sequence = ("log_time", "host_name", "ip_address", "cpu_use", "mem_used", "mem_free", "store_total", "store_free")
+
