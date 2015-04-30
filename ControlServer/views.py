@@ -136,7 +136,7 @@ def containers_view(request):
             # Create container
             lxc_create = " echo -e \"sudo lxc-create -n %s -t pi -f %s/%s.config -P %s\"; sleep 400;" % (
                 con_name, con_base_path, con_name, con_base_path)
-            con_create_string = tnet_login + lxc_create + tnet_exit
+            con_create_string = tnet_login + conConfig + lxc_create + tnet_exit
 
             try:
                 subprocess.Popen(con_create_string, stdout=subprocess.PIPE)
