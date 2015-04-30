@@ -101,7 +101,7 @@ def containers_view(request):
             lxcconf05 = " echo -e \"## Capabilities\"\n >> %s/%s.config;" % (con_base_path, con_name)
             lxcconf06 = " echo -e \"lxc.cap.drop = sys_admin\"\n\n >> %s/%s.config;" % (con_base_path, con_name)
 
-            lxcconf07 = " echo -e \"## Devices\"\n >> %s.config;" % (con_base_path, con_name)
+            lxcconf07 = " echo -e \"## Devices\"\n >> %s/%s.config;" % (con_base_path, con_name)
             lxcconf08 = " echo -e \"lxc.cgroup.devices.deny = a\"\n >> %s/%s.config;" % (con_base_path, con_name)
             lxcconf09 = " echo -e \"lxc.cgroup.devices.allow = c 1:3 rwm\"\n >> %s/%s.config;" % (con_base_path, con_name)
             lxcconf10 = " echo -e \"lxc.cgroup.devices.allow = c 1:5 rwm\"\n >> %s/%s.config;" % (con_base_path, con_name)
